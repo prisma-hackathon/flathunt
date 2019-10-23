@@ -5,34 +5,15 @@ const x = Xray()
 
 const photon = new Photon()
 
+type ListResult = {
+  id: string
+  title: string
+  coldRent: string
+  size: string
+}
+
 async function main() {
-  // const oauth: any = new OAuth(
-  //   'https://rest.immobilienscout24.de/restapi/security/oauth/request_token',
-  //   'https://rest.immobilienscout24.de/restapi/security/oauth/access_token',
-  //   'Prisma-Hackathon-SearchKey',
-  //   'zsEDRsPmKuVrccPA',
-  //   '1.0',
-  //   null,
-  //   'HMAC-SHA1',
-  // )
-
-  // oauth.get(
-  //   'https://rest.immobilienscout24.de/restapi/api/search/v1.0/search/radius?realestatetype=ApartmentRent&geocoordinates=52.512303;13.431191;1',
-  //   '',
-  //   'zsEDRsPmKuVrccPA',
-  //   (r: any) => {
-  //     console.log(r)
-  //   },
-  // )
-
-  type El = {
-    id: string
-    title: string
-    coldRent: string
-    size: string
-  }
-
-  const list: El[] = await x(
+  const list: ListResult[] = await x(
     'https://www.immobilienscout24.de/Suche/S-T/Wohnung-Miete/Berlin/Berlin/Mitte-Mitte?enteredFrom=one_step_search',
     '.result-list__listing',
     [
@@ -59,20 +40,20 @@ async function main() {
     )
     console.log({ ...details, ...el })
 
-    await photon.flats.create({
-      data: {
-        bathroom: parseInt(details.numBaths, 10) > 0,
-        coldRent: parseFloat(el.coldRent.replace('.', '').replace(' €', '')),
-        size: parseFloat(el.size.replace(' m²', '')),
-        heating: details.heatingType === 'x',
-        immoId: el.id,
-        year: parseInt(details.year, 10),
-      },
+    const data = {
+      bathroom: parseInt(details.numBaths, 10) > 0,
+      coldRent: parseFloat(el.coldRent.replace('.', '').replace(' €', '')),
+      size: parseFloat(el.size.replace(' m²', '')),
+      heating: details.heatingType === 'x',
+      year: parseInt(details.year, 10),
+    }
+
+    await photon.flats.upsert({
+      where: { immoId: el.id },
+      update: data,
+      create: { immoId: el.id, ...data },
     })
   }
-
-  // const result = await photon.flats.findMany()
-  // console.log(result)
 }
 
 main()
