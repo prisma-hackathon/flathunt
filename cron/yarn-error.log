@@ -1,0 +1,33 @@
+Arguments: 
+  /usr/local/Cellar/node/12.1.0/bin/node /usr/local/bin/yarn add -D ts-node
+
+PATH: 
+  /Users/schickling/.wasmer/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/schickling/.config/bin:/Users/schickling/.bin:/Users/schickling/.go/bin:/usr/local/bin
+
+Yarn version: 
+  1.16.0
+
+Node version: 
+  12.1.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  SyntaxError: /Users/schickling/Code/flathunt/cron/package.json: Unexpected token } in JSON at position 20
+      at JSON.parse (<anonymous>)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:304:30)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:315:13
+
+npm manifest: 
+  {
+    "name": "cron",
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

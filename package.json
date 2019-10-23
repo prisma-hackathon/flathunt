@@ -1,0 +1,6 @@
+{
+  "name": "flathunt",
+  "devDependencies": {
+    "prisma2": "2.0.0-preview015"
+  }
+}
