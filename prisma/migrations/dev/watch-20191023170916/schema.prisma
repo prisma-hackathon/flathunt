@@ -4,13 +4,13 @@ generator photon {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:dev.db"
+  url = "***"
 }
 
 model Flat {
   id        String  @default(cuid()) @id
   immoId    String
-  year      Int
+  // year      Int
   size      Float
   bathroom  Boolean
   heating   Boolean

@@ -4,7 +4,7 @@ generator photon {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:dev.db"
+  url = "***"
 }
 
 model Flat {
@@ -16,7 +16,7 @@ model Flat {
   heating   Boolean
   coldRent  Float
   // warmRent  Float
-  // maxRent   Float
-  // latitude  Float
-  // longitude Float
+  maxRent   Float
+  latitude  Float
+  longitude Float
 }

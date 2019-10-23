@@ -9,6 +9,7 @@
     "typescript": "^3.6.4"
   },
   "dependencies": {
-    "oauth": "^0.9.15"
+    "oauth": "^0.9.15",
+    "x-ray": "^2.3.4"
   }
 }
