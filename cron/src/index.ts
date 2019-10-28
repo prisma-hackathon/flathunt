@@ -1,4 +1,4 @@
-import { Photon } from '@generated/photon'
+import { Photon, Flat } from '@generated/photon'
 // import { OAuth } from 'oauth'
 const Xray = require('x-ray')
 const x = Xray()
@@ -10,6 +10,7 @@ type ListResult = {
   title: string
   coldRent: string
   size: string
+  pictureUrl: string
 }
 
 async function main() {
@@ -22,11 +23,12 @@ async function main() {
         title: '.result-list-entry__brand-title',
         coldRent: '.result-list-entry__primary-criterion dd',
         size: '.result-list-entry__primary-criterion:nth-child(2) dd',
+        pictureUrl: '.gallery__image@src',
       },
     ],
   )
 
-  for (const el of list.slice(0, 3)) {
+  for (const el of list.slice(0, 40)) {
     const [details] = await x(
       `https://www.immobilienscout24.de/expose/${el.id}`,
       '#is24-content',
@@ -45,7 +47,8 @@ async function main() {
       coldRent: parseFloat(el.coldRent.replace('.', '').replace(' €', '')),
       size: parseFloat(el.size.replace(' m²', '')),
       heating: details.heatingType === 'x',
-      year: parseInt(details.year, 10),
+      year: parseInt(details.year, 10) | 0,
+      pictureUrl: el.pictureUrl,
     }
 
     await photon.flats.upsert({
